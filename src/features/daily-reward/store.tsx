@@ -173,7 +173,6 @@ export function DailyRewardProvider({ children }: { children: ReactNode }) {
     const p = phaseOf(state, now);
     let target: number | null = null;
     if (p.kind === 'cooldown') target = p.unlockAt;
-    else if (p.kind === 'distance' && p.unlockAt) target = p.unlockAt;
     else if (p.kind === 'done') target = p.resetAt;
     if (target === null) return;
     const delta = target - now + 50;

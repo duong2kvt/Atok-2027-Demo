@@ -17,13 +17,19 @@ export default function App() {
 const DEVICE_W = 390;
 const DEVICE_H = 844;
 
-/** Presentation stage: the phone on the left, demo controls on the right. */
+/** Presentation stage: demo controls on the left, the phone on the right. */
 function Stage() {
   const scale = useDeviceScale();
   const [panelOpen, setPanelOpen] = useState(false);
 
   return (
     <div className="stage">
+      <div className={`stage__panel ${panelOpen ? 'is-open' : ''}`}>
+        <DemoPanel />
+      </div>
+      <button className="stage__panel-toggle" onClick={() => setPanelOpen((v) => !v)}>
+        {panelOpen ? 'Đóng' : 'Demo controls'}
+      </button>
       <div className="stage__device-area">
         <div className="device" style={{ width: DEVICE_W * scale, height: DEVICE_H * scale }}>
           <div className="device__screen" style={{ transform: `scale(${scale})` }}>
@@ -31,12 +37,6 @@ function Stage() {
           </div>
         </div>
       </div>
-      <div className={`stage__panel ${panelOpen ? 'is-open' : ''}`}>
-        <DemoPanel />
-      </div>
-      <button className="stage__panel-toggle" onClick={() => setPanelOpen((v) => !v)}>
-        {panelOpen ? 'Đóng' : 'Demo controls'}
-      </button>
     </div>
   );
 }

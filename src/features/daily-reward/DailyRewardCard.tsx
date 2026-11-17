@@ -17,8 +17,7 @@ export function DailyRewardCard() {
   const remainingToday = nextResetAt(state) - now;
   const showDistance = state.checkIns.length >= 2;
 
-  const caption =
-    phase.kind === 'ready' && phase.index < 2 ? 'You’ll receive' : phase.kind === 'done' ? 'Today you received' : 'Reward receive';
+  const caption = phase.kind === 'done' ? 'Today you received' : 'You’ll receive';
   const amount = phase.kind === 'done' ? todayTotal(state) : upcoming;
 
   let label: string;
@@ -29,7 +28,7 @@ export function DailyRewardCard() {
   } else if (phase.kind === 'cooldown') {
     label = `Next Check-in: ${formatDuration(phase.unlockAt - now)}`;
   } else if (phase.kind === 'distance') {
-    label = phase.unlockAt ? `Next Check-in: ${formatDuration(phase.unlockAt - now)}` : `Reach ${C.distanceTiers[0].km} Km to check-in`;
+    label = `Reach ${C.distanceTiers[0].km} Km to check-in`;
   } else {
     label = `New rewards in ${formatDuration(phase.resetAt - now)}`;
   }

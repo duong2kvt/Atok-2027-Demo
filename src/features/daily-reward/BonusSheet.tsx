@@ -3,11 +3,7 @@ import { useEffect } from 'react';
 import avatar1 from '../../assets/sheet-avatar-1.webp';
 import avatar2 from '../../assets/sheet-avatar-2.webp';
 import avatar3 from '../../assets/sheet-avatar-3.webp';
-import flBottom from '../../assets/nft-fl-bottom.svg';
-import flTop from '../../assets/nft-fl-top.svg';
-import spotlight from '../../assets/nft-spotlight.svg';
-import glass from '../../assets/nft-glass.svg';
-import ship from '../../assets/nft-ship.webp';
+import glassBox from '../../assets/nft-glass-box.webp';
 import distanceSymbol from '../../assets/distance-symbol.svg';
 import runner from '../../assets/distance-runner.webp';
 import { Button, HomeIndicator } from '../../components/primitives';
@@ -156,26 +152,19 @@ function AvatarIllustration() {
 }
 
 function NftGlassBox() {
-  // NFT/Glass Box (Figma 2293:71036).
+  // NFT/Glass Box – single exported render of the Figma layer (2293:71036).
   return (
-    <motion.div
+    <motion.img
+      src={glassBox}
+      alt=""
       className="ill-nft"
       initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.12 }}
-    >
-      <img src={flBottom} alt="" style={{ left: 0, top: 88.22, width: 119.463, height: 71.785 }} />
-      <img src={flTop} alt="" style={{ left: 0.54, top: 76.9, width: 119.463, height: 71.781 }} />
-      <img src={spotlight} alt="" style={{ left: 2.22, top: 1.47, width: 115.556, height: 142.015 }} />
-      <motion.img
-        src={ship}
-        alt=""
-        className="ill-nft__ship"
-        animate={{ y: [0, -4, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <img src={glass} alt="" style={{ left: 0.13, top: 0, width: 119.463, height: 144.824 }} />
-    </motion.div>
+      animate={{ opacity: 1, y: [0, -4, 0] }}
+      transition={{
+        opacity: { duration: 0.3, delay: 0.12 },
+        y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.4 },
+      }}
+    />
   );
 }
 

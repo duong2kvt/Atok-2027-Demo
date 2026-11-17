@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useEffect } from 'react';
 import atokSymbol from '../assets/atok-symbol.svg';
 import { DAILY_REWARD_CONFIG as C } from '../features/daily-reward/config';
@@ -56,12 +56,8 @@ export function DemoPanel() {
     skipLabel = 'Bỏ qua thời gian chờ 4 tiếng';
     skipHint = `Tua nhanh ${formatDuration(phase.unlockAt - now)} tới lần check-in tiếp theo.`;
     canSkip = true;
-  } else if (phase.kind === 'distance' && phase.unlockAt) {
-    skipLabel = 'Bỏ qua thời gian chờ 4 tiếng';
-    skipHint = 'Lần 3 mở khi đi đủ 4 km – dùng mô phỏng di chuyển bên dưới.';
-    canSkip = true;
   } else if (phase.kind === 'distance') {
-    skipHint = 'Lần 3 mở khi đi đủ 4 km – dùng mô phỏng di chuyển bên dưới.';
+    skipHint = 'Lần 3 không cần chờ – mở ngay khi đi đủ 4 km. Dùng mô phỏng di chuyển bên dưới.';
   } else if (phase.kind === 'done') {
     skipLabel = 'Sang ngày mới (07:00)';
     skipHint = `Đã nhận đủ 3 lần. Daily reward reset sau ${formatDuration(phase.resetAt - now)}.`;
@@ -175,32 +171,12 @@ export function DemoPanel() {
         <h2>Logic (theo note Figma)</h2>
         <ul className="rules">
           <li>Daily reward bắt đầu lúc 07:00 và reset lúc 07:00 sáng hôm sau.</li>
-          <li>3 lần check-in mỗi ngày. Sau lần 1 và lần 2 phải đợi 4 tiếng.</li>
-          <li>Lần 3 tính theo quãng đường đi được sau lần 2: 4 km = 1%, 8 km = 2%, 12 km = 3%.</li>
+          <li>3 lần check-in mỗi ngày. Sau lần 1 phải đợi 4 tiếng mới tới lần 2.</li>
+          <li>Lần 3 không cần chờ 4 tiếng – mở ngay khi đi đủ 4 km sau lần 2: 4 km = 1%, 8 km = 2%, 12 km = 3%.</li>
           <li>Nút Bonus mở bottom sheet tương ứng với lần check-in hiện tại.</li>
         </ul>
       </section>
 
-      <section className="panel__section panel__section--log">
-        <h2>Nhật ký</h2>
-        <ul className="log">
-          <AnimatePresence initial={false}>
-            {d.log.slice(0, 8).map((l) => (
-              <motion.li
-                key={l.at + l.text}
-                layout
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-              >
-                <time>{formatDateTime(l.at).split(' · ')[1]}</time>
-                {l.text}
-              </motion.li>
-            ))}
-          </AnimatePresence>
-          {d.log.length === 0 && <li className="log__empty">Chưa có thao tác nào.</li>}
-        </ul>
-      </section>
 
       <button className="panel__reset" onClick={d.reset}>
         ↺ Reset demo <kbd>R</kbd>

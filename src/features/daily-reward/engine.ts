@@ -14,7 +14,7 @@ export type DailyRewardState = {
 export type Phase =
   | { kind: 'ready'; index: 0 | 1 | 2 }
   | { kind: 'cooldown'; index: 1; unlockAt: number }
-  | { kind: 'distance'; index: 2; unlockAt: number | null }
+  | { kind: 'distance'; index: 2 }
   | { kind: 'done'; resetAt: number };
 
 /** 07:00 that opened the reward day containing `now`. */
@@ -62,11 +62,9 @@ export function phaseOf(state: DailyRewardState, now: number): Phase {
     return now >= unlockAt ? { kind: 'ready', index: 1 } : { kind: 'cooldown', index: 1, unlockAt };
   }
   if (n === 2) {
-    const cooldownEnd = state.checkIns[1].at + C.cooldownMs;
-    const distanceOk = state.distanceKm >= C.distanceTiers[0].km;
-    const timeOk = !C.thirdCheckInRequiresCooldown || now >= cooldownEnd;
-    if (distanceOk && timeOk) return { kind: 'ready', index: 2 };
-    return { kind: 'distance', index: 2, unlockAt: now < cooldownEnd ? cooldownEnd : null };
+    // 3rd check-in: no cooldown – unlocks as soon as the minimum distance is reached.
+    if (state.distanceKm >= C.distanceTiers[0].km) return { kind: 'ready', index: 2 };
+    return { kind: 'distance', index: 2 };
   }
   return { kind: 'done', resetAt: nextResetAt(state) };
 }

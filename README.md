@@ -29,8 +29,8 @@ npm run build:standalone # build lại file 1-trang trong dist-standalone/index.
 
 | Khu vực | Mô tả |
 | --- | --- |
-| Điện thoại (trái) | App thật: Check-in → màn nhận thưởng (motion từ Figma) → Collect → số dư tăng, nút chuyển sang đếm ngược. Nút **Bonus** mở bottom sheet tương ứng từng lần check-in (kéo xuống / chạm nền để đóng). |
-| Bảng điều khiển (phải) | **⏩ Bỏ qua thời gian chờ** (phím `N`), **Mô phỏng di chuyển** +1 km (`D`) / +4 km / tự động đi, **Nhảy nhanh** tới từng trạng thái, **Reset** (`R`). Có nhật ký thao tác và tóm tắt logic. |
+| Điện thoại (phải) | App thật: Check-in → màn nhận thưởng → Collect → số dư tăng. Nút **Bonus** mở bottom sheet tương ứng từng lần check-in (kéo xuống / chạm nền để đóng). |
+| Bảng điều khiển (trái) | **⏩ Bỏ qua thời gian chờ** (phím `N`), **Mô phỏng di chuyển** +1 km (`D`) / +4 km / tự động đi, **Nhảy nhanh** tới từng trạng thái, **Reset** (`R`) và tóm tắt logic. |
 
 Trên màn hình điện thoại thật, bảng điều khiển nằm sau nút **Demo controls** ở cạnh phải.
 
@@ -45,7 +45,7 @@ Trạng thái được lưu trong trình duyệt (localStorage) nên refresh kh�
   3. **3rd** — Distance bonus: 4 km = 1%, 8 km = 2%, 12 km = 3% (× 1.98 ATOK). Mở khi đi đủ 4 km.
 
 Mọi con số/quy tắc nằm ở `src/features/daily-reward/config.ts` để thử phương án khác nhanh.
-`thirdCheckInRequiresCooldown` — bật nếu muốn lần 3 vừa cần 4 km **và** đợi đủ 4 tiếng (design hiện tại chỉ cần 4 km).
+Lần check-in thứ 3 chỉ cần đủ quãng đường, không có thời gian chờ 4 tiếng.
 
 ## Cấu trúc
 
